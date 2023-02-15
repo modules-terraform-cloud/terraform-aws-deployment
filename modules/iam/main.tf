@@ -1,0 +1,60 @@
+#For windows files
+locals {
+  module_path = "${replace(path.module, "\\", "/")}"
+}
+
+# IAM AmazonEC2FullAccess role
+
+resource "aws_iam_role_policy" "ec2_policy" {
+  name = "ec2_policy"
+  role = aws_iam_role.ec2_role.id
+  policy = "${file("${local.module_path}/../iam/ec2-policy.json")}"
+
+  # For linux with file
+  #policy = "${file("ec2-policy.json")}"
+
+}
+
+resource "aws_iam_role" "ec2_role" {
+  name = "ec2_role"
+
+  assume_role_policy = "${file("${local.module_path}/../iam/ec2-assume-policy.json")}"
+
+  # For linux with file
+  #policy = "${file("ec2-assume-policy.json")}"
+
+}
+
+
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "ec2_describe_profile"
+  role = aws_iam_role.ec2_role.name
+}
+
+
+
+# IAM s3 bucket policy
+
+resource "aws_iam_role_policy" "s3_policy" {
+  name = "s3_policy"
+  role = aws_iam_role.s3_role.id
+  policy = "${file("${local.module_path}/../iam/s3-policy.json")}"
+
+  # For linux with file
+  #policy = "${file("s3-policy.json")}"
+}
+
+resource "aws_iam_role" "s3_role" {
+  name = "s3_role"
+  assume_role_policy = "${file("${local.module_path}/../iam/s3-assume-policy.json")}"
+
+  # For linux with file
+  #policy = "${file("s3-assume-policy.json")}"
+}
+
+
+resource "aws_iam_instance_profile" "s3_profile" {
+  name = "s3_bucket_profile"
+  role = aws_iam_role.s3_role.name
+}
+
