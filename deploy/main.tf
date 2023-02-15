@@ -18,7 +18,9 @@ provider "aws" {
 
 # Create vpc
 module "vpc" {
-  source                       = "git::https://github.com/DianaCohen/terraform_cloud.git//modules/vpc"
+  source  = "app.terraform.io/goddessdiana/vpc/aws"
+  version = "1.0.0"
+  # insert required variables here
   aws_region                   = var.aws_region
   vpc_cidr                     = var.vpc_cidr
   public_subnet_cidrs          = var.public_subnet_cidrs
@@ -27,6 +29,7 @@ module "vpc" {
   anyware_cidr_range           = var.anyware_cidr_range
   ssh_cidr_range               = var.ssh_cidr_range
 }
+
 
 #Create security groups
 module "sg" {
