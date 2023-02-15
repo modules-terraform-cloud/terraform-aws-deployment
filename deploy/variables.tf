@@ -24,10 +24,9 @@ variable "ebs_size" {}
 
 variable "rds_instances_count" {}
 
-#variable "private_data_subnet" {}
+variable "AWS_SECRET_ACCESS_KEY" {}
 
-
-
+variable "AWS_ACCESS_KEY_ID" {}
 
 
 
